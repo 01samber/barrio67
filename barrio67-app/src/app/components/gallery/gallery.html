@@ -5,7 +5,7 @@
       @for (item of galleryItems; track item.src) {
         <div class="gallery-item">
           @if (item.type === 'video') {
-            <video [src]="item.src" [muted]="true" loop playsinline autoplay (loadeddata)="$event.target.muted = true"></video>
+            <video [src]="item.src" [muted]="true" loop playsinline autoplay></video>
           } @else {
             <img [src]="item.src" [alt]="item.alt || item.caption" loading="lazy" />
           }
