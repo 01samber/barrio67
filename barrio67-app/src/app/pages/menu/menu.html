@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+
+<main class="menu-page">
+  <div class="container">
+    <h1 class="page-title">Our Menu</h1>
+    <p class="page-subtitle">Tap any item to see ingredients and details</p>
+
+    @for (category of menuData; track category.name) {
+      <section class="menu-category">
+        <h2 class="category-title">{{ category.name }}</h2>
+        <div class="menu-cards">
+          @for (item of category.items; track item.name) {
+            <div class="flip-card" [class.flipped]="isFlipped(category.name, item.name)" (click)="toggleFlip(category.name, item.name)" role="button" tabindex="0" (keydown.enter)="toggleFlip(category.name, item.name)" (keydown.space)="toggleFlip(category.name, item.name); $event.preventDefault()">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <span class="item-category">{{ category.name }}</span>
+                  <h3 class="item-name">{{ item.name }}</h3>
+                  @if (item.tags && item.tags.length) {
+                    <div class="item-tags">
+                      @for (tag of item.tags; track tag) {
+                        <span class="tag">{{ tag }}</span>
+                      }
+                    </div>
+                  }
+                  <span class="item-price">{{ item.price }}</span>
+                </div>
+                <div class="flip-back">
+                  <h3 class="item-name">{{ item.name }}</h3>
+                  @if (item.description) {
+                    <p class="item-description">{{ item.description }}</p>
+                  } @else {
+                    <p class="item-description">Ask your server for details</p>
+                  }
+                  <span class="item-price">{{ item.price }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </div>
+</main>
+
+<app-footer></app-footer>

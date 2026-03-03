@@ -1,0 +1,18 @@
+# Dependencies
+barrio67-app/node_modules/
+
+# Build output
+barrio67-app/dist/
+barrio67-app/tmp/
+barrio67-app/out-tsc/
+
+# Angular cache
+barrio67-app/.angular/
+
+# IDEs
+.idea/
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db

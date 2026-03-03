@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+
+<main class="admin-reviews-page">
+  <div class="container">
+    @if (!authenticated()) {
+      <div class="admin-login">
+        <h1 class="page-title">Admin Access</h1>
+        <p class="page-subtitle">Enter PIN to view customer reviews</p>
+        <div class="pin-form">
+          <input
+            type="password"
+            [value]="pin()"
+            (input)="pin.set($any($event.target).value); error.set('')"
+            placeholder="Enter PIN"
+            (keyup.enter)="checkAuth()" />
+          <button type="button" class="btn btn-primary" (click)="checkAuth()">View Reviews</button>
+          @if (error()) {
+            <p class="error-msg">{{ error() }}</p>
+          }
+        </div>
+      </div>
+    } @else {
+      <h1 class="page-title">Customer Reviews</h1>
+      <p class="page-subtitle">Use this feedback to improve your service</p>
+
+      @if (reviewService.reviews().length === 0) {
+        <p class="no-reviews">No reviews yet. Reviews submitted by customers will appear here.</p>
+      } @else {
+        <div class="reviews-list">
+          @for (review of reviewService.reviews(); track review.id) {
+            <div class="review-card">
+              <div class="review-header">
+                <span class="review-name">{{ review.name }}</span>
+                <span class="review-rating">
+                  @for (s of [1,2,3,4,5]; track s) {
+                    <span class="star" [class.filled]="s <= review.rating">★</span>
+                  }
+                </span>
+              </div>
+              <p class="review-comment">{{ review.comment }}</p>
+              <span class="review-date">{{ formatDate(review.date) }}</span>
+            </div>
+          }
+        </div>
+      }
+
+      <a routerLink="/" class="btn btn-secondary" style="margin-top: 2rem;">Back to Home</a>
+    }
+  </div>
+</main>
+
+<app-footer></app-footer>

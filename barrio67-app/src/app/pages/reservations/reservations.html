@@ -1,0 +1,71 @@
+<app-navbar></app-navbar>
+
+<main class="reservations-page">
+  <div class="container">
+    <h1 class="page-title">Reserve a Table</h1>
+    <p class="page-subtitle">Book your spot at Barrio 67. We'll confirm your reservation shortly.</p>
+
+    @if (submitted) {
+      <div class="success-message">
+        <h2>Thank you!</h2>
+        <p>Your reservation request has been received. We'll contact you shortly to confirm.</p>
+        <a routerLink="/" class="btn btn-primary">Back to Home</a>
+      </div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="reservation-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input id="name" type="text" formControlName="name" placeholder="Your name" />
+            @if (form.get('name')?.invalid && form.get('name')?.touched) {
+              <span class="error">Please enter your name</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input id="email" type="email" formControlName="email" placeholder="your@email.com" />
+            @if (form.get('email')?.invalid && form.get('email')?.touched) {
+              <span class="error">Please enter a valid email</span>
+            }
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone *</label>
+            <input id="phone" type="tel" formControlName="phone" placeholder="70 211 299" />
+            @if (form.get('phone')?.invalid && form.get('phone')?.touched) {
+              <span class="error">Please enter a valid phone number</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="guests">Number of Guests *</label>
+            <input id="guests" type="number" formControlName="guests" min="1" max="20" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Date *</label>
+            <input id="date" type="date" formControlName="date" />
+            @if (form.get('date')?.invalid && form.get('date')?.touched) {
+              <span class="error">Please select a date</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="time">Time *</label>
+            <input id="time" type="time" formControlName="time" />
+            @if (form.get('time')?.invalid && form.get('time')?.touched) {
+              <span class="error">Please select a time</span>
+            }
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="notes">Special Requests</label>
+          <textarea id="notes" formControlName="notes" rows="3" placeholder="Dietary restrictions, allergies, celebration..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit Reservation</button>
+      </form>
+    }
+  </div>
+</main>
+
+<app-footer></app-footer>
